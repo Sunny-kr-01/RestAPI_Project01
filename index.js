@@ -1,9 +1,9 @@
 const express = require('express');
-
+const users = require('./MOCK_DATA.json')
 const app = express();
 
 app.get('/',(req,res)=>{
-    res.send("this is home page")
+    res.json(users)
 })
 
 app.listen(67)
