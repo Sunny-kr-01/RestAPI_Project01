@@ -2,6 +2,21 @@ const express = require('express');
 const users = require('./MOCK_DATA.json')
 const app = express();
 
+app.route('/josn/users/:id')
+.get((req,res)=>{
+    const id=Number(req.params.id);
+    const user= users.find((user)=>{
+        return user.id===id;
+    })
+    res.json(user);
+})
+.patch((req,res)=>{
+
+})
+.delete((req,res)=>{
+
+})
+
 app.get('/',(req,res)=>{
     res.send("Home page");
 })
@@ -23,15 +38,15 @@ app.get('/users',(req,res)=>{
     `
     return res.send(html);
 })
-app.get('/json/users/:id',(req,res)=>{
-    const id =Number(req.params.id);
-    const user = users.find(user=>user.id===id);
-    res.json(user)
-})
 app.get('/users/:id',(req,res)=>{
     const id =Number(req.params.id);
     const user = users.find(user=>user.id===id);
-    res.send(user.first_name)
+    res.send(user.first_name+" "+user.last_name)
+})
+
+app.post('/json/users',(req,res)=>{
+    // to create new user 
+    return res.json({status:"pending"})
 })
 
 app.listen(67,()=>{
