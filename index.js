@@ -18,10 +18,12 @@ app.route('/json/users/:id')
 })
 .delete((req,res)=>{
     const id= req.params.id;
-    const body = req.body;
-    const user_to_del= users.find(user=>user.id==id);
+    const index= users.findIndex(user=>user.id==id);
+    const user_to_del=users.splice(index,1);
     console.log(user_to_del);
-    res.json({status:"Pending"})
+    res.json({status:`Deleted`,
+        deleted : user_to_del[0]
+    })
 })
 
 app.get('/',(req,res)=>{
