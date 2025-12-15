@@ -19,8 +19,19 @@ app.route('/json/users/:id')
 .delete((req,res)=>{
     const id= req.params.id;
     const index= users.findIndex(user=>user.id==id);
+    if(!index){
+        res.json({
+            status : "user not found"
+        })
+    }
     const user_to_del=users.splice(index,1);
-    console.log(user_to_del);
+    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
+        if(err){
+            res.json({
+                status : "Error 404"
+            })
+        }
+    })
     res.json({status:`Deleted`,
         deleted : user_to_del[0]
     })
