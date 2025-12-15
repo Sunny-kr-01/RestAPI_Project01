@@ -19,7 +19,7 @@ app.route('/json/users/:id')
 .delete((req,res)=>{
     const id= req.params.id;
     const index= users.findIndex(user=>user.id==id);
-    if(!index){
+    if(index==-1){
         res.json({
             status : "user not found"
         })
