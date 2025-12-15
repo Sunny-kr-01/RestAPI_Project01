@@ -1,4 +1,5 @@
 const express = require('express');
+const fs=require('fs')
 const users = require('./MOCK_DATA.json')
 const app = express();
 
@@ -44,9 +45,15 @@ app.get('/users/:id',(req,res)=>{
     res.send(user.first_name+" "+user.last_name)
 })
 
+app.use(express.urlencoded({extended:false}))
+
 app.post('/json/users',(req,res)=>{
-    // to create new user 
-    return res.json({status:"pending"})
+    const body = req.body;
+    users.push({...body,id:users.length+1}); 
+    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
+        res.json({sttus : "success" , id :users.length});
+    })
+    
 })
 
 app.listen(67,()=>{
