@@ -18,9 +18,13 @@ app.route('/json/users/:id')
     const body = req.body;
     const index = users.findIndex(user=>user.id===userId);
     users[index]={id:userId,...body}
+    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
+        if(err){
+            res.json({status : "Error happened"})
+        }
+    })
     res.json({
-        "To update" : `User with id : ${userId}`,
-        status : "Pending"})
+        status : `Done updating user with id : ${userId}`})
 })
 .delete((req,res)=>{
     const id= req.params.id;
