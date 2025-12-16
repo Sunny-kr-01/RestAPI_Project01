@@ -14,7 +14,13 @@ app.route('/json/users/:id')
     res.json(user);
 })
 .patch((req,res)=>{
-    // updqate 
+    const userId=Number(req.params.id);
+    const body = req.body;
+    const index = users.findIndex(user=>user.id===userId);
+    users[index]={id:userId,...body}
+    res.json({
+        "To update" : `User with id : ${userId}`,
+        status : "Pending"})
 })
 .delete((req,res)=>{
     const id= req.params.id;
