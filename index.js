@@ -3,7 +3,18 @@ const fs=require('fs')
 const users = require('./MOCK_DATA.json')
 const app = express();
 
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({extended:false})) // this is a middleware 
+
+app.use((req,res,next)=>{
+    console.log("Middleware was used")
+    //res.end("Middleware 1")
+    next()
+})
+
+app.use((req,res,next)=>{
+    console.log("Middleware 2")
+    next();
+})
 
 app.route('/json/users/:id')
 .get((req,res)=>{
@@ -77,7 +88,7 @@ app.get('/users/:id',(req,res)=>{
 app.post('/json/users',(req,res)=>{
     const body = req.body;
     console.log(body)
-    users.push({...body,id:users.length+1}); 
+    users.push({id:users.length+1,...body}); 
     fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
         res.json({sttus : "success" , id :users.length});
     })
