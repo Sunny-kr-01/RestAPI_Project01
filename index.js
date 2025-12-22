@@ -6,6 +6,28 @@ const app = express();
 
 app.use(express.urlencoded({extended:false})) // this is a middleware 
 
+//creating schema
+const userSchema=new mongoose.Schema({
+    firstName : {
+        type : string,
+        required : true
+    },
+    lastName : {
+        type:string,
+    },
+    email : {
+        type:string,
+        required:true,
+        unique:true
+    },
+    job:{
+        type:string
+    },
+    gender:{
+        type:string
+    }
+})
+
 app.route('/json/users/:id')
 .get((req,res)=>{
     const id=Number(req.params.id);
