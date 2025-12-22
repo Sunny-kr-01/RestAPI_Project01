@@ -39,7 +39,6 @@ const userSchema=new mongoose.Schema({
 })
 
 //creating model
-
 const my_users=mongoose.model('user',userSchema)
 
 app.route('/json/users/:id')
@@ -111,14 +110,19 @@ app.get('/users/:id',(req,res)=>{
     res.send(user.first_name+" "+user.last_name)
 })
 
-app.post('/json/users',(req,res)=>{
+app.post('/json/users',async(req,res)=>{
     const body = req.body;
-    console.log(body)
-    users.push({id:users.length+1,...body}); 
-    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
-        res.json({sttus : "success" , id :users.length});
-    })
+    //don't need that
     
+    const result=await my_users.create({
+        firstName:body.first_name,
+        lastName:body.last_name,
+        email:body.email,
+        gender:body.gender,
+        job:body.Job_Title
+    })
+    console.log(result)
+    res.status(201).json({status : "Success"})
 })
 
 app.listen(67,()=>{
