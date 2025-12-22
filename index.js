@@ -4,27 +4,37 @@ const mongoose = require('mongoose')
 const users = require('./MOCK_DATA.json')
 const app = express();
 
+//connecting mongodb
+mongoose.connect('mongodb://127.0.0.1:27017/mongodb_first')
+.then(()=>{
+    console.log("MongoDB Connected")
+})
+.catch((err)=>{
+    console.log("Mongo Error : ",err);
+})
+
+
 app.use(express.urlencoded({extended:false})) // this is a middleware 
 
 //creating schema
 const userSchema=new mongoose.Schema({
     firstName : {
-        type : string,
+        type : String,
         required : true
     },
     lastName : {
-        type:string,
+        type:String,
     },
     email : {
-        type:string,
+        type:String,
         required:true,
         unique:true
     },
     job:{
-        type:string
+        type:String
     },
     gender:{
-        type:string
+        type:String
     }
 })
 
