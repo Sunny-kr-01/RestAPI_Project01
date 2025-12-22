@@ -28,6 +28,10 @@ const userSchema=new mongoose.Schema({
     }
 })
 
+//creating model
+
+const my_users=mongoose.model('user',userSchema)
+
 app.route('/json/users/:id')
 .get((req,res)=>{
     const id=Number(req.params.id);
