@@ -5,17 +5,6 @@ const app = express();
 
 app.use(express.urlencoded({extended:false})) // this is a middleware 
 
-app.use((req,res,next)=>{
-    console.log("Middleware was used")
-    //res.end("Middleware 1")
-    next()
-})
-
-app.use((req,res,next)=>{
-    console.log("Middleware 2")
-    next();
-})
-
 app.route('/json/users/:id')
 .get((req,res)=>{
     const id=Number(req.params.id);
